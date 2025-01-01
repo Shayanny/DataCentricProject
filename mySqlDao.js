@@ -72,6 +72,37 @@ var getStudents = function () {
     });
   };
 
+  var getStudentById = function (sid) {
+    return new Promise((resolve, reject) => {
+        pool
+            .query("SELECT * FROM student WHERE sid = ?", [sid])
+            .then((data) => {
+                console.log("THEN mysqldao.js - getStudentById");
+                resolve(data[0]); // Assuming sid is unique, return the first result
+            })
+            .catch((error) => {
+                console.log("CATCH mysqldao.js - getStudentById");
+                reject(error);
+            });
+    });
+};
+
+  var editStudent = function (student) {
+    return new Promise((resolve, reject) => {
+      pool
+        .query("UPDATE student SET name = ?, age = ? WHERE sid = ?",
+           [student.name, student.age, student.sid])
+        .then((data) => {
+          console.log("THEN mysqldao.js - updateStudent");
+          resolve(data);
+        })
+        .catch((error) => {
+          console.log("CATCH mysqldao.js - updateStudent");
+          reject(error);
+        });
+    });
+  };
+
   
 
-  module.exports = { getStudents, getGrades, getModules };
+  module.exports = { getStudents, getGrades, getModules, editStudent , getStudentById };

@@ -46,18 +46,31 @@ app.get("/students", (req, res) => {
 });
 
 
-app.get("/students", (req, res) => {
-    mySqlDao.getStudents()
-    .then((data)=> {
-        //console.log(JSON.stringify(data))
-        //res.send(data)
-        res.render("students",{"theStudents": data})
+app.get("/students/edit/:sid", (req,res)=>{
+    mySqlDao.getStudentById(req.params.sid) 
+    .then((student) => {
+        res.render("updateStudent", { student }); 
     })
-
     .catch((error) => {
-        console.log("catch index.js")
-    })
-    //console.log("pool error: "+ error)
+        console.error("Error fetching student:", error);
+    });
+
+});
+
+app.post("/students/edit/:sid", (req, res) => {
+    const updatedStudent = {
+        sid: req.params.sid,
+        name: req.body.name,
+        age: req.body.age,
+    };
+
+    mySqlDao.editStudent(updatedStudent) 
+        .then(() => {
+            res.redirect("/students"); // Redirect to the students list after updating
+        })
+        .catch((error) => {
+            console.error("Error updating student:", error);
+        });
 });
 
 app.get("/grades", (req, res) => {
