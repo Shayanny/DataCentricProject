@@ -57,7 +57,8 @@ app.get("/students/edit/:sid", (req,res)=>{
 
 });
 
-app.post("/students/edit/:sid", (req, res) => {
+app.post("/students/edit/:sid",  (req, res) => {
+    
     const updatedStudent = {
         sid: req.params.sid,
         name: req.body.name,
