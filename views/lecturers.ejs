@@ -1,0 +1,45 @@
+<style>
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+</style>
+
+<table>
+    <h1>Lecturers</h1>
+    <div class="back-link"></div>
+        <a href="/">Back to Home</a>
+    </div>
+    <tr>
+        <th>Lecturer ID</th>
+        <th>Name</th>
+        <th>Department ID</th>
+        <th>Action</th>
+    </tr>
+
+    <% lecturers.forEach((lecturer)=> { %>
+        <tr>
+            <td>
+                <%= lecturer._id %>
+            </td>
+            <td>
+                <%= lecturer.name %>
+            </td>
+            <td>
+                <%= lecturer.did %>
+            </td>
+            <td>Delete</td>
+        </tr>
+        <% }); %>
+</table>
+

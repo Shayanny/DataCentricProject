@@ -1,0 +1,45 @@
+<style>
+    table {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    .back-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+</style>
+
+<table>
+    <h1>Grades</h1>
+    <div class="back-link"></div>
+        <a href="/">Back to Home</a>
+    </div>
+    <tr>
+        <th> Name</th>
+        <th> Module</th>
+        <th> Grade</th>
+    </tr>
+    <% gradesData.forEach((student) => { %>
+        <% if (student.modules.length === 0) { %>
+            <!-- Student with no modules -->
+            <tr>
+                <td><%= student.student_name %></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <% } else { %>
+            <% student.modules.forEach((module) => { %>
+                <tr>
+                    <td><%= student.student_name %></td>
+                    <td><%= module.module_name %></td>
+                    <td><%= module.grade %></td>
+                </tr>
+            <% }); %>
+        <% } %>
+    <% }); %>
+</table>
