@@ -3,7 +3,7 @@ let ejs = require('ejs')
 var mySqlDao = require('./mySqlDao')
 var myMongoDB = require('./myMongoDB')
 var bodyParser = require('body-parser')
-const { check, validationResult } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 
 var app = express();
@@ -79,9 +79,24 @@ app.get("/students/add", (req, res) => {
 
 });
 
-app.post(
-    '/students/add',(req, res) => {
+app.post('/students/add',async (req, res) => {
+
     
+
+    try {
+        const studentId = req.body.sid;
+
+        // Check if the Student ID already exists
+        const existingStudent = await mySqlDao.getStudentById(studentId);
+
+        if (existingStudent) {
+            // If the Student ID exists, show an error message
+            return res.render('addStudent', {
+                error: `A student with ID ${studentId} already exists`,
+                student: req.body, // Retain entered data
+            });
+        }else{
+
         // Add the student to the database
         const newStudent = {
             sid: req.body.sid,
@@ -89,16 +104,16 @@ app.post(
             age: req.body.age,
         };
 
-        mySqlDao.addStudent(newStudent)
-            .then(() => {
-                res.redirect('/students'); // Redirect to students list after adding
-            })
-            .catch((error) => {
-                console.error('Error adding student:', error);
-                res.status(500).send('Error adding student.');
-            });
+        await mySqlDao.addStudent(newStudent);
+
+        res.redirect('/students'); // Redirect to students list after adding
     }
-);
+    } catch (err) {
+        console.error('Error adding student:', err);
+        
+    }
+
+});
 
 app.get("/grades", (req, res) => {
     // Fetch all data using Promise.all
