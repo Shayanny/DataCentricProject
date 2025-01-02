@@ -9,19 +9,37 @@
         text-align: left;
     }
     .back-link {
-            margin-top: 20px;
-            text-align: center;
-        }
+        margin-top: 20px;
+        text-align: center;
+    }
+    .error-message {
+        margin-top: 20px;
+        font-size: 18px;
+        color: black;
+    }
 
 </style>
 
-<h1>Delete Lecturer</h1>
-    <p>Are you sure you want to delete the following lecturer?</p>
-    <table>
-        <tr>
-            <th>ID</th>
-            <td><%= lecturer._id %></td>
-        </tr>
+<% if (error) { %>
+    <div class="error-message">
+        <h1>Error Message</h1>
+        <p>
+            <p>Cannot delete lecturer <%= lecturer._id %>. He/She has associated modules.</p>
+        </p>
+        <div class="back-link"></div>
+            <a href="/">Home</a>
+        </div>
+    </div>
+    <% }else { %>
+        <h1>Delete Lecturer</h1>
+        <p>Are you sure you want to delete the following lecturer?</p>
+        <table>
+            <tr>
+                <th>ID</th>
+                <td>
+                    <%= lecturer._id %>
+                </td>
+            </tr>
         <tr>
             <th>Name</th>
             <td><%= lecturer.name %></td>
@@ -39,3 +57,4 @@
             <button type="button" class="cancel">Cancel</button>
         </a>
     </div>
+    <% } %>

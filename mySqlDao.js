@@ -118,6 +118,20 @@ var getStudents = function () {
     });
 };
 
+var getModulesByLecturerId = function (lecturerId) {
+  return new Promise((resolve, reject) => {
+      pool
+          .query("SELECT * FROM module WHERE lecturer = ?", [lecturerId])
+          .then((data) => {
+              console.log(`Modules taught by Lecturer ${lecturerId}:`, data);
+              resolve(data); // Returns a list of modules
+          })
+          .catch((error) => {
+              console.error('Error fetching modules for lecturer:', error);
+              reject(error);
+          });
+  });
+};
   
 
-  module.exports = { getStudents, getGrades, getModules, editStudent , getStudentById, addStudent };
+  module.exports = { getStudents, getGrades, getModules, editStudent , getStudentById, addStudent, getModulesByLecturerId };
