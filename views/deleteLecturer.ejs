@@ -14,3 +14,28 @@
         }
 
 </style>
+
+<h1>Delete Lecturer</h1>
+    <p>Are you sure you want to delete the following lecturer?</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <td><%= lecturer._id %></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td><%= lecturer.name %></td>
+        </tr>
+        <tr>
+            <th>Department ID</th>
+            <td><%= lecturer.did %></td>
+        </tr>
+    </table>
+    <div class="buttons">
+        <form action="/lecturers/delete/<%= lecturer._id %>" method="POST" style="display: inline;">
+            <button type="submit" class="confirm">Delete</button>
+        </form>
+        <a href="/lecturers">
+            <button type="button" class="cancel">Cancel</button>
+        </a>
+    </div>

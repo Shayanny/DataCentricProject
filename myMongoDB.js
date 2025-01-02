@@ -28,5 +28,25 @@ const getAllLecturers = async () => {
     }
 };
 
+const getLecturerById = async (lecturerId) => {
+    try {
+        return await Lecturer.findById(lecturerId);
+    } catch (err) {
+        console.error('Error fetching lecturer by ID:', err);
+        throw err;
+    }
+};
 
-module.exports = {getAllLecturers};
+const deleteLecturer = async (lecturerId) => {
+    try {
+        const result = await Lecturer.deleteOne({ _id: lecturerId }); 
+        console.log(`Deleted Lecturer with ID: ${lecturerId}`);
+        return result;
+    } catch (err) {
+        console.error('Error deleting lecturer:', err);
+        throw err;
+    }
+};
+
+
+module.exports = {getAllLecturers, deleteLecturer, getLecturerById};

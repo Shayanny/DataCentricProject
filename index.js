@@ -153,3 +153,28 @@ app.get('/lecturers', async (req, res) => {
         console.error('Error fetching lecturers:', err);
     }
 });
+
+app.get('/lecturers/delete/:lid', async (req, res) => {
+    try {
+        const lecturerId = req.params.lid;
+        const lecturer = await myMongoDB.getLecturerById(lecturerId); 
+        if (lecturer) {
+            res.render('deleteLecturer', { lecturer });
+        } else {
+            res.status(404).send('Lecturer not found.');
+        }
+    } catch (err) {
+        console.error('Error fetching lecturer:', err);
+    }
+});
+
+app.post('/lecturers/delete/:lid', async (req, res) => {
+    try {
+        const lecturerId = req.params.lid;
+        await myMongoDB.deleteLecturer(lecturerId); 
+        res.redirect('/lecturers'); 
+    } catch (err) {
+        console.error('Error deleting lecturer:', err);
+        res.status(500).send('Error deleting lecturer.');
+    }
+});
