@@ -21,7 +21,7 @@ const Lecturer = mongoose.model('lecturers', LecturerSchema);
 
 const getAllLecturers = async () => {
     try {
-        return await Lecturer.find({});
+        return await Lecturer.find({}).sort({ _id: 1 }); // Sort by _id in ascending order;
     } catch (err) {
         console.error('Error fetching lecturers:', err);
         throw err;
