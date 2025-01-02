@@ -75,13 +75,11 @@ app.post("/students/edit/:sid",  (req, res) => {
 });
 
 app.get("/students/add", (req, res) => {
-    res.render('addStudent', { errors: [], student: { sid: '', name: '', age: '' } });
+    res.render('addStudent', { error: [], student: { sid: '', name: '', age: '' } });
 
 });
 
 app.post('/students/add',async (req, res) => {
-
-    
 
     try {
         const studentId = req.body.sid;
