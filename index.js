@@ -161,20 +161,27 @@ app.get("/lecturers/delete/:lid", async (req, res) => {
     // Check if the lecturer teaches any module
     const modules = await mySqlDao.getModulesByLecturerId(lecturerId);
 
+    const lecturer = await myMongoDB.getLecturerById(lecturerId);
+
+    if (!lecturer) {
+        return res.status(404).send('Lecturer not found.');
+    }
+
     if (modules.length > 0) {
       // Render the delete page with an error message if they teach a module
-      const lecturer = await myMongoDB.getLecturerById(lecturerId); 
       return res.render("deleteLecturer", {
         lecturer,
         error:
           "Cannot delete lecturer because they are assigned to one or more modules.",
-      });
+      }); 
+      }else {
+        res.render('deleteLecturer', {
+            lecturer,
+            error: null,
+        });
     }
-    // Proceed to delete the lecturer
-    await myMongoDB.deleteLecturer(lecturerId);
-    res.redirect("/lecturers");
   } catch (err) {
-    console.error("Error fetching lecturer:", err);
+    console.error("Error fetching lecturer or module", err);
   }
 });
 
@@ -185,6 +192,5 @@ app.post('/lecturers/delete/:lid', async (req, res) => {
         res.redirect('/lecturers'); 
     } catch (err) {
         console.error('Error deleting lecturer:', err);
-        res.status(500).send('Error deleting lecturer.');
     }
 });
