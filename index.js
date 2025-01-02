@@ -74,6 +74,32 @@ app.post("/students/edit/:sid",  (req, res) => {
         });
 });
 
+app.get("/students/add", (req, res) => {
+    res.render('addStudent', { errors: [], student: { sid: '', name: '', age: '' } });
+
+});
+
+app.post(
+    '/students/add',(req, res) => {
+    
+        // Add the student to the database
+        const newStudent = {
+            sid: req.body.sid,
+            name: req.body.name,
+            age: req.body.age,
+        };
+
+        mySqlDao.addStudent(newStudent)
+            .then(() => {
+                res.redirect('/students'); // Redirect to students list after adding
+            })
+            .catch((error) => {
+                console.error('Error adding student:', error);
+                res.status(500).send('Error adding student.');
+            });
+    }
+);
+
 app.get("/grades", (req, res) => {
     // Fetch all data using Promise.all
     Promise.all([

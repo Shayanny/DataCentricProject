@@ -103,6 +103,21 @@ var getStudents = function () {
     });
   };
 
+  var addStudent = function (student) {
+    return new Promise((resolve, reject) => {
+        pool
+            .query("INSERT INTO student (sid, name, age) VALUES (?, ?, ?)", [student.sid, student.name, student.age])
+            .then((data) => {
+                console.log("THEN mysqldao.js - addStudent");
+                resolve(data);
+            })
+            .catch((error) => {
+                console.log("CATCH mysqldao.js - addStudent");
+                reject(error);
+            });
+    });
+};
+
   
 
-  module.exports = { getStudents, getGrades, getModules, editStudent , getStudentById };
+  module.exports = { getStudents, getGrades, getModules, editStudent , getStudentById, addStudent };

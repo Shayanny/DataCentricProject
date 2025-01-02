@@ -14,3 +14,37 @@
         }
 
 </style>
+
+<h1>Add Student</h1>
+    <div class="back-link"></div>
+        <a href="/">Back to Home</a>
+    </div>
+    <form action="/students/add" method="POST">
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>Student ID</td>
+                <td>
+                    <input type="text" id="sid" name="sid" value="<%= student.sid %>" minlength="4" maxlength="4" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" id="name" name="name" value="<%= student.name %>" minlength="2" required>
+                </td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>
+                    <input type="number" id="age" name="age" value="<%= student.age %>" min="18" required>
+                </td>
+            </tr>
+        </table>
+        <div style="text-align: center; margin-top: 10px;"></div>
+                <button type="submit">Add</button>
+            </div>
+    </form>
